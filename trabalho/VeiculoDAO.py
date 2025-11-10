@@ -1,6 +1,6 @@
 import sqlite3
-from Veiculo import Veiculo
-from DB import conecao;
+from .Veiculo import Veiculo
+from .DB import conecao;
 class VeiculoDAO:
     def __init__(self, conn=conecao):
         self.conn = conn
