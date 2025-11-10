@@ -12,18 +12,18 @@ def veiculo_servico_base():
 
 @pytest.fixture(scope="function")
 def veiculo_servico(placa_nao_cadastrada, veiculo_servico_base):
-    exisite = veiculo_servico_base.veiculoDAO.obter_por_placa(placa_nao_cadastrada)
+    exisite = veiculo_servico_base.obter_por_placa(placa_nao_cadastrada)
     if exisite and exisite.id:
-            veiculo_servico_base.veiculoDAO.deletar(exisite.id)
+            veiculo_servico_base.deletar(exisite.id)
     yield veiculo_servico_base    
-    exisite = veiculo_servico_base.veiculoDAO.obter_por_placa(placa_nao_cadastrada)
+    exisite = veiculo_servico_base.obter_por_placa(placa_nao_cadastrada)
     if exisite and exisite.id:
-            veiculo_servico_base.veiculoDAO.deletar(exisite.id)
+            veiculo_servico_base.deletar(exisite.id)
 
 def test_caminhoFeliz():
 
-    veiculo = VeiculoService.CadastraVeiculo(
-        "a","b",1,1,1
+    veiculo = VeiculoService().CadastraVeiculo(
+        "a","b",1,1
     )
     assert veiculo is not None
     assert veiculo.id >0
@@ -31,28 +31,28 @@ def test_caminhoFeliz():
 
 #modelo, placa, ano, diaria, disponivel
 def test_dados_vazios_feliz():
-    veiculo = VeiculoService.CadastraVeiculo(
-        "a","b",1,1,1
+    veiculo = VeiculoService().CadastraVeiculo(
+        "a","b",1,1
     )
     assert veiculo is not None
     assert veiculo.id >0
 
 def test_dados_vazios_modelo():
     with pytest.raises(ValueError):
-        veiculo = VeiculoService.CadastraVeiculo(
-        None,"b",1,1,1
+        veiculo = VeiculoService().CadastraVeiculo(
+        None,"b",1,1
     )
     
 
 def test_dados_vazios_placa():
     with pytest.raises(ValueError):
-        veiculo = VeiculoService.CadastraVeiculo(
-        "a","",1,1,1
+        veiculo = VeiculoService().CadastraVeiculo(
+        "a","",1,1
     )
         
 
-def test_cadastrar_sucesso_retorna_objeto_com_id(veiculo_servico,placa_nao_cadastrada):
-    veiculo = veiculo_servico.CadastraVeiculo(modelo="Gol 1.0", placa=placa_nao_cadastrada, ano=2015, diaria=123.45)
+def test_cadastrar_sucesso_retorna_objeto_com_id(veiculo_servico_base,placa_nao_cadastrada):
+    veiculo = veiculo_servico_base.CadastraVeiculo("Gol_1.0", placa_nao_cadastrada, 2015, 123.45)
     assert isinstance(veiculo, Veiculo)
     assert isinstance(veiculo.id, int) and veiculo.id > 0
     assert veiculo.modelo == "Gol 1.0"

@@ -1,16 +1,11 @@
 from .VeiculoDAO import VeiculoDAO
 from .Veiculo import Veiculo
 
-class VeiculoService():
-     
-    def __init__(self):
-        self.veiculoDAO = VeiculoDAO()
+class VeiculoService:
 
-    @classmethod
-    def CadastraVeiculo(modelo, placa, ano, diaria, disponivel):
-
-                
-        veiculo = Veiculo(modelo,placa,ano,diaria, disponivel)
+    def CadastraVeiculo(self, modelo, placa, ano, diaria):
+        veiculoDAO = VeiculoDAO()
+        veiculo = Veiculo(modelo,placa,ano,diaria,True)
 
         if veiculo.modelo == None:
             raise ValueError("Campo modelo nulo")
@@ -28,7 +23,9 @@ class VeiculoService():
             raise ValueError("Campo modelo vazio")'''
         
 
-        self.veiculoDAO.inserir(veiculo)
+        veiculoDAO.inserir(veiculo)
         return veiculo
     
-    
+    def obter_por_placa(placa_nao_cadastrada):
+        veiculoDAO = VeiculoDAO()
+        return veiculoDAO.obter_por_placa(placa_nao_cadastrada)
