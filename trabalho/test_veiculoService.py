@@ -1,5 +1,5 @@
 import pytest
-from .veiculo_service import VeiculoService
+from veiculo_service import VeiculoService
 
 def test_caminhoFeliz():
 

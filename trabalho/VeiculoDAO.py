@@ -1,8 +1,9 @@
 import sqlite3
 from Veiculo import Veiculo
+from DB import conecao;
 class VeiculoDAO:
-    def __init__(self, db_path="veiculo.db"):
-        self.conn = sqlite3.connect(db_path)
+    def __init__(self, conn=conecao):
+        self.conn = conn
         self.conn.row_factory = sqlite3.Row
         self.conn.execute('''CREATE TABLE IF NOT EXISTS veiculos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -78,5 +79,3 @@ class VeiculoDAO:
         self.conn.execute("DELETE FROM veiculos WHERE id = ?", (veiculo_id,))  # tupla
         self.conn.commit()
 
-    def fechar(self):
-        self.conn.close()
